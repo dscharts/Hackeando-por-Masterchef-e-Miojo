@@ -1,7 +1,8 @@
+#coding: utf-8
 from random import randint
 
 class Usuario:
-    def _init_(self):
+    def __init__(self):
         self.username = ""
         self.barras_wifi = 42
         self.conexao_maxima = 42
@@ -13,17 +14,17 @@ class Usuario:
         return vizinho.barras_wifi <= 0
 
 class Com_wifi(Usuario):
-    def _init_(self, user):
-        Usuario._init_(self)
+    def __init__(self, usuario):
+        Usuario.__init__(self)
         if randint(0, 1):
             self.username = "Vizinho rico"
         else:
             self.username = "Vizinho chato"
-        self.barras_wifi = randint(2, user.barras_wifi)
+        self.barras_wifi = randint(2, usuario.barras_wifi)
 
 class Sua_conta(Usuario):
-    def _init_(self):
-        Usuario._init_(self)
+    def __init__(self):
+        Usuario.__init__(self)
         self.mensagem_de_humor = 'bored'
         self.barras_wifi = 42
         self.conexao_maxima = 42
@@ -100,12 +101,12 @@ Comandos = {
     'hackear': Sua_conta.hack,
     }
 
-p = Usuario()
+p = Sua_conta()
 p.username = raw_input("Qual o username do seu hacker no twitter? ")
 print "(digite ajuda para obter lista de ações)"
 print "%s chega em casa, querendo baixar o Masterchef Junior de ontem" % p.username
 
-while(p.barras_wifi > 1):
+while p.barras_wifi > 0:
     linha = raw_input("> ")
     args = linha.split()
     if len(args) > 0:
