@@ -8,9 +8,9 @@ class Usuario:
         self.conexao_maxima = 42
     def rastrear(self, vizinho):
         piora_conexao = min(max(randint(0, self.barras_wifi) - randint(0, vizinho.barras_wifi), 0), vizinho.barras_wifi)
-        vizinho.barras_wifi = vizinho.hp - piora_conexao
-        if piora_conexao == 0: print "%s põe senha na wifi, para se defender de %" %(vizinho.name, self.name)
-        else: print "%s hackeia %s!" %(self.name, vizinho.name)
+        vizinho.barras_wifi = vizinho.barras_wifi - piora_conexao
+        if piora_conexao == 0: print "%s põe senha na wifi, para se defender de %s" %(vizinho.username, self.username)
+        else: print "%s hackeia %s!" %(self.username, vizinho.username)
         return vizinho.barras_wifi <= 0
 
 class Com_wifi(Usuario):
@@ -20,7 +20,16 @@ class Com_wifi(Usuario):
             self.username = "Vizinho rico"
         else:
             self.username = "Vizinho chato"
-        self.barras_wifi = randint(2, usuario.barras_wifi)
+        self.barras_wifi = randint(int(usuario.conexao_maxima * 0.8), usuario.conexao_maxima)
+
+class TV():
+    def __init__(self, tv):
+        if randint(0, 2):
+            self.username = "Masterchef"
+        else if:
+            self.username = "AHS"
+        else:
+            self.username = "The Flash"
 
 class Sua_conta(Usuario):
     def __init__(self):
@@ -54,7 +63,7 @@ class Sua_conta(Usuario):
             print "%s ainda não acessou uma rede!" % self.username
             self.conexaoRuim()
         else:
-            print "%s encontra o download de MasterChef" % self.username
+            print "%s encontra o download, e agora quer ver %s" % (self.username, tv.username)
             if randint(0, 1):
                 self.vizinho = Com_wifi(self)
                 print "%s percebe Wifi do %s!"  % (self.username, self.vizinho.username)
@@ -96,7 +105,7 @@ Comandos = {
     'ajuda': Sua_conta.trending_topics,
     'mensagemDeHumor': Sua_conta.mensagem_de_humor,
     'comerMiojo': Sua_conta.comer,
-    'baixar': Sua_conta.baixar,
+    'rastrear': Sua_conta.baixar,
     'outraRede': Sua_conta.procurar_nova_rede,
     'hackear': Sua_conta.hack,
     }
@@ -104,7 +113,7 @@ Comandos = {
 p = Sua_conta()
 p.username = raw_input("Qual o username do seu hacker no twitter? ")
 print "(digite ajuda para obter lista de ações)"
-print "%s chega em casa, querendo baixar o Masterchef Junior de ontem" % p.username
+print "%s chega em casa, querendo baixar o episódio do Mar Vermelho" % p.username
 
 while p.barras_wifi > 0:
     linha = raw_input("> ")
